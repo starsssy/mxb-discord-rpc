@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Discord">
+      <UniqueIdentifier>{630f3b4d-0536-4843-92df-0b65c6f4df68}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rpc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\achievement_manager.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\activity_manager.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\application_manager.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\core.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\image_manager.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\lobby_manager.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\network_manager.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\overlay_manager.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\relationship_manager.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\storage_manager.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\store_manager.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\types.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\user_manager.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+    <ClCompile Include="discord\src\voice_manager.cpp">
+      <Filter>Source Files\Discord</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="structs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="includes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rpc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\voice_manager.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\achievement_manager.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\activity_manager.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\application_manager.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\core.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\discord.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\event.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\ffi.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\image_manager.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\lobby_manager.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\network_manager.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\overlay_manager.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\relationship_manager.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\storage_manager.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\store_manager.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\types.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="discord\src\user_manager.h">
+      <Filter>Source Files\Discord</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyformat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
