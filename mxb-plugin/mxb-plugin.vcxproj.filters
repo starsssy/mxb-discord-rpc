@@ -132,4 +132,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Library Include="discord\lib\discord_game_sdk.dll.lib" />
+  </ItemGroup>
 </Project>

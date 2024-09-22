@@ -21,7 +21,7 @@
 
 #include "tinyformat.h"
 
-// FOR THE LIB: NEEDS DISCORD DLL IN EXE DIRECTORY
+// FOR THE DISCORD LIB: NEEDS DISCORD DLL IN GAME EXE DIRECTORY
 #include "discord/src/discord.h" // https://dl-game-sdk.discordapp.net/3.2.1/discord_game_sdk.zip // https://discord.com/developers/docs/developer-tools/game-sdk#using-the-sdk
 
 #include "structs.h"

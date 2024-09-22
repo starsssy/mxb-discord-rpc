@@ -195,6 +195,9 @@
     <ClInclude Include="structs.h" />
     <ClInclude Include="tinyformat.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Library Include="discord\lib\discord_game_sdk.dll.lib" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -5,64 +5,118 @@ namespace RPC
 	// Private members
 	discord::Core* instance = nullptr;
 
-
 	// Callbacks
 	void UpdateCallback(discord::Result result)
 	{
-		if (result != discord::Result::Ok)
-			DbgMsg("[ERR] Failed to update activity\n");
+		switch (result)
+		{
+		case discord::Result::Ok:
+			//DbgMsg("[+] Updated activity\n");
+			break;
 
-		else
-			DbgMsg("[+] Updated activity\n");
+			/* Doesnt work */
+		//case discord::Result::NotRunning:
+		//	// Destroy instance if discord is closed, thread will attempt to create a new one
+		//	RPC::Destroy();
+		//	DbgMsg("[ERR] Discord application closed, instance destroyed\n");
+		//	break;
+
+		default:
+			DbgMsg("[ERR] Failed to update activity\n");
+			break;
+		}
 	}
 
 	void ClearCallback(discord::Result result)
 	{
-		if (result != discord::Result::Ok)
-			DbgMsg("[ERR] Failed to clear activity\n");
-
-		else
+		switch (result)
+		{
+		case discord::Result::Ok:
 			DbgMsg("[+] Cleared activity\n");
+			break;
+
+			/* Doesnt work */
+		//case discord::Result::NotRunning:
+		//	// Destroy instance if discord is closed, thread will attempt to create a new one
+		//	RPC::Destroy();
+		//	DbgMsg("[ERR] Discord application closed, instance destroyed\n");
+		//	break;
+
+		default:
+			DbgMsg("[ERR] Failed to clear activity\n");
+			break;
+		}
+	}
+
+	// Receives logs from discord sdk
+	void LogHookCallback(discord::LogLevel level, const char* message)
+	{
+		static const char* levels[5] =
+		{
+			"0",
+			"Error",
+			"Warn",
+			"Info",
+			"Debug",
+		};
+
+		DbgMsg("[DSC] Level: %s [ %s ]\n", levels[(int)level], message);
 	}
 
 
 	// Functions
 	void Thread()
 	{
-		// Called until instance is valid
-		while (!instance)
+		static auto attempt_create = []() -> void
 		{
 			RPC::Create();
 
 			// Sleep for a second so we dont attempt to spam create if unavailable at the moment
 			if (!instance)
 				Sleep(1000);
-		}
-
-		while (true)
+		};
+		
+		while (!shutdown_called)
 		{
-			RPC::Update();
+			// Called until instance is valid
+			if (!instance)
+				attempt_create();
 
-			// More than 4/s unnecessary
-			Sleep(250);
+			else
+			{
+				RPC::Update();
+
+				// More than 4/s unnecessary
+				Sleep(250);
+			}
 		}
 	}
 
 	void Create()
 	{
-		if (discord::Core::Create(1286928297288011817, DiscordCreateFlags_NoRequireDiscord, &instance) != discord::Result::Ok)
+		if (discord::Core::Create(1286928297288011817, DiscordCreateFlags_Default, &instance) != discord::Result::Ok)
 		{
 			DbgMsg("[ERR] Failed to create core instance\n");
 			return;
 		}
 
-		start_unix_time = time(0);
+		DbgMsg("[+] New Core instance created\n");
+
+		instance->SetLogHook(discord::LogLevel::Error, LogHookCallback);
 	}
 
 	void Destroy()
 	{
-		instance->ActivityManager().ClearActivity(ClearCallback);
-		instance->~Core();
+		if (instance)
+		{
+			// Only clear if were destroying through shutdown
+			if (shutdown_called)
+				instance->ActivityManager().ClearActivity(ClearCallback);
+
+			instance->~Core();
+
+			instance = nullptr;
+		}
 	}
 
 	void Update()
@@ -94,7 +148,7 @@ namespace RPC
 		assets.SetLargeImage("rpc-icon");
 		assets.SetLargeText("MX Bikes");
 
-		if (sim_paused)
+		if (sim_paused || !on_track)
 		{
 			activity.SetState("In Menus");
 			activity.SetDetails("");

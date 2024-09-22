@@ -11,6 +11,8 @@ MXB_EXPORT int Startup(char *_szSavePath)
 
 	DbgMsg("[FN] " __FUNCDNAME__ "\n");
 
+	RPC::start_unix_time = time(0);
+
 	std::thread rpc_thread(RPC::Thread);
 	rpc_thread.detach();
 
@@ -22,6 +24,7 @@ MXB_EXPORT void Shutdown()
 {
 	DbgMsg("[FN] " __FUNCDNAME__ "\n");
 
+	RPC::shutdown_called = true;
 	RPC::Destroy();
 }
 
@@ -73,12 +76,23 @@ MXB_EXPORT void EventInit(void *_pData,int _iDataSize)
 	RPC::game_state = psEventData->m_iType;
 }
 
+/* called when bike goes to track. This function is optional */
+MXB_EXPORT void RunInit(void *_pData,int _iDataSize)
+{
+	SPluginsBikeSession_t *psSessionData = (SPluginsBikeSession_t*)_pData;
+	if (!psSessionData)
+		return;
+
+	RPC::on_track = true;
+}
+
 /* called when bike leaves the track. This function is optional */
 MXB_EXPORT void RunDeinit()
 {
 	DbgMsg("[FN] " __FUNCDNAME__ "\n");
 
 	RPC::lap_num = 0;
+	RPC::on_track = false;
 }
 
 /* called when simulation is started / resumed. This function is optional */
