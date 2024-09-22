@@ -132,7 +132,7 @@ namespace RPC
 
 		static auto state_to_string = [](int state) -> const char*
 		{
-			return state == 1 ? "Testing" : "Race"; // 1 = testing, 2 = race, 4 = straight rhythm (Pretty much a race)
+			return state == 1 ? "Testing" : "Racing"; // 1 = testing, 2 = race, 4 = straight rhythm (Pretty much a race)
 		};
 
 		discord::Activity activity = {};
