@@ -135,4 +135,37 @@ MXB_EXPORT void RaceSplit(void *_pData,int _iDataSize)
 	RPC::lap_num = psRaceSplit->m_iLapNum;
 }
 
+/*
+_iState: 0 = on track; 1 = spectate; 2 = replay.
+Set _piNumQuads to the number of quads to draw.
+Set _ppQuad to an array of SPluginQuad_t structures.
+Set _piNumString to the number of strings to draw.
+Set _ppString to an array of SPluginString_t structures.
+This function is optional
+*/
+MXB_EXPORT void Draw(int _iState,int *_piNumQuads,void **_ppQuad,int *_piNumString,void **_ppString)
+{
+	*_piNumQuads = 0;
+	*_piNumString = 0;
+
+	if (RPC::draw_state != _iState)
+	{
+		DbgMsg("[+] Draw state changed: %i to %i\n", RPC::draw_state, _iState);
+	}
+
+	RPC::draw_state = _iState;
+}
+
+/* Return 1 if _piSelect is set, from 0 to _iNumVehicles - 1 */
+MXB_EXPORT int SpectateVehicles(int _iNumVehicles,void *_pVehicleData,int _iCurSelection,int *_piSelect)
+{
+	//DbgMsg("[FN] " __FUNCDNAME__ "\n");
+
+	//SPluginsSpectateVehicle_t *pasVehicleData = (SPluginsSpectateVehicle_t*)_pVehicleData;
+
+	RPC::last_spectating_unix_time = time(0);
+
+	return 0;
+}
+
 #pragma endregion

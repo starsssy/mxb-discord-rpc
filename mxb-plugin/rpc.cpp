@@ -94,9 +94,9 @@ namespace RPC
 
 	void Create()
 	{
-		if (discord::Core::Create(1286928297288011817, DiscordCreateFlags_Default, &instance) != discord::Result::Ok)
+		if (discord::Result result = discord::Core::Create(1286928297288011817, DiscordCreateFlags_Default, &instance); result != discord::Result::Ok)
 		{
-			DbgMsg("[ERR] Failed to create core instance\n");
+			DbgMsg("[ERR] Failed to create core instance (Result: %i)\n", result);
 			return;
 		}
 
@@ -137,7 +137,7 @@ namespace RPC
 
 		discord::Activity activity = {};
 
-		activity.SetType(discord::ActivityType::Playing);
+		activity.SetType(discord::ActivityType::Playing); // Could put this to watching during replay/spectating
 		activity.SetName("MX Bikes");
 
 		auto& timestamps = activity.GetTimestamps();
@@ -150,8 +150,24 @@ namespace RPC
 
 		if (sim_paused || !on_track)
 		{
-			activity.SetState("In Menus");
-			activity.SetDetails("");
+			if (time(0) - last_spectating_unix_time <= 1 && draw_state > 0/* spec or replay */) // Could use an std::chrono clock for this
+			{
+				if (draw_state == 1)
+				{
+					activity.SetState("Spectating");
+					activity.SetDetails(tfm::format("%s", track_name).c_str());
+				}
+				else
+				{
+					activity.SetState("Watching Replay");
+					activity.SetDetails(tfm::format("%s on %s", track_name, bike_name).c_str());
+				}
+			}
+			else
+			{
+				activity.SetState("In Menus");
+				activity.SetDetails("");
+			}
 		}
 		else
 		{
