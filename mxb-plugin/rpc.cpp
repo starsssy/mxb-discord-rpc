@@ -155,7 +155,7 @@ namespace RPC
 				if (draw_state == 1)
 				{
 					activity.SetState("Spectating");
-					activity.SetDetails(tfm::format("%s", track_name).c_str());
+					activity.SetDetails(track_name);
 				}
 				else
 				{
