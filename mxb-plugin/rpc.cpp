@@ -67,21 +67,16 @@ namespace RPC
 	// Functions
 	void Thread()
 	{
-		static auto attempt_create = []() -> void
-		{
-			RPC::Create();
-
-			// Sleep for a second so we dont attempt to spam create if unavailable at the moment
-			if (!instance)
-				Sleep(1000);
-		};
-		
 		while (!shutdown_called)
 		{
-			// Called until instance is valid
 			if (!instance)
-				attempt_create();
+			{
+				RPC::Create();
 
+				// Sleep for a second so we dont attempt to spam create if unavailable at the moment
+				if (!instance)
+					Sleep(1000);
+			}
 			else
 			{
 				RPC::Update();
@@ -148,30 +143,27 @@ namespace RPC
 		assets.SetLargeImage("rpc-icon");
 		assets.SetLargeText("MX Bikes");
 
-		if (sim_paused || !on_track)
+		if (time(0) - last_spectating_unix_time <= 1 && draw_state > 0/* spec or replay */) // Could use an std::chrono clock for this
 		{
-			if (time(0) - last_spectating_unix_time <= 1 && draw_state > 0/* spec or replay */) // Could use an std::chrono clock for this
+			if (draw_state == 1)
 			{
-				if (draw_state == 1)
-				{
-					activity.SetState("Spectating");
-					activity.SetDetails(track_name);
-				}
-				else
-				{
-					activity.SetState("Watching Replay");
-					activity.SetDetails(tfm::format("%s on %s", track_name, bike_name).c_str());
-				}
+				activity.SetState("Spectating");
+				activity.SetDetails(track_name);
 			}
 			else
 			{
-				activity.SetState("In Menus");
-				activity.SetDetails("");
+				activity.SetState("Watching Replay");
+				activity.SetDetails(tfm::format("%s on %s", track_name, bike_name).c_str());
 			}
+		}
+		else if (!on_track)
+		{
+			activity.SetState("In Menus");
+			activity.SetDetails("");
 		}
 		else
 		{
-			activity.SetState(tfm::format("%s (Lap %i)", state_to_string(game_state), lap_num + 1).c_str());
+			activity.SetState(sim_paused ? "Paused" : tfm::format("%s (Lap %i)", state_to_string(game_state), lap_num + 1).c_str());
 			activity.SetDetails(tfm::format("%s on %s", track_name, bike_name).c_str());
 		}
 
